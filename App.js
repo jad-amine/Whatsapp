@@ -10,6 +10,9 @@ import SignIn from "./screens/SignIn";
 import ContextWrapper from "./context/ContextWrapper";
 import Context from "./context/Context";
 import Profile from "./screens/Profile";
+import Photo from "./screens/Photo";
+import Chats from "./screens/Chats";
+import { Ionicons } from "@expo/vector-icons";
 
 LogBox.ignoreLogs([
   "Setting a timer",
@@ -76,7 +79,42 @@ function App() {
 }
 
 function Home() {
-  return <Text>Hi I have a profile</Text>;
+  const {
+    theme: { colors },
+  } = useContext(Context);
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => {
+        return {
+          tabBarLabel: () => {
+            if (route.name === "photo") {
+              return <Ionicons name="camera" size={20} color={colors.white} />;
+            } else {
+              return (
+                <Text style={{ color: colors.white }}>
+                  {route.name.toUpperCase()}
+                </Text>
+              );
+            }
+          },
+          tabBarShowIcon: true,
+          tabBarLabelStyle: {
+            color: colors.white,
+          },
+          tabBarIndicatorStyle: {
+            backgroundColor: colors.white,
+          },
+          tabBarStyle: {
+            backgroundColor: colors.foreground,
+          },
+        };
+      }}
+      initialRouteName="chats"
+    >
+      <Tab.Screen name="photo" component={Photo} />
+      <Tab.Screen name="chats" component={Chats} />
+    </Tab.Navigator>
+  );
 }
 
 const styles = StyleSheet.create({
