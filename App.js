@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { LogBox, StyleSheet, Text, View } from "react-native";
 import { useAssets } from "expo-asset";
@@ -6,6 +5,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import SignIn from "./screens/SignIn";
+import ContextWrapper from "./context/ContextWrapper";
 
 LogBox.ignoreLogs([
   "Setting a timer",
@@ -35,7 +36,7 @@ function App() {
   return (
     <NavigationContainer>
       {!currUser ? (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="signIn" component={SignIn} />
         </Stack.Navigator>
       ) : (
@@ -64,5 +65,9 @@ export default function Main() {
   if (!assets) {
     return <Text>Loading..</Text>;
   }
-  return <App />;
+  return (
+    <ContextWrapper>
+      <App />;
+    </ContextWrapper>
+  );
 }
