@@ -67,7 +67,7 @@ export default function Main() {
   }
   return (
     <ContextWrapper>
-      <App />;
+      <App />
     </ContextWrapper>
   );
 }

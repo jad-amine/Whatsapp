@@ -27,6 +27,6 @@ export const db = initializeFirestore(app, {
 export function signIn(email, password) {
   return signInWithEmailAndPassword(auth, email, password);
 }
-export function singUp(email, password) {
+export function signUp(email, password) {
   return createUserWithEmailAndPassword(auth, email, password);
 }
