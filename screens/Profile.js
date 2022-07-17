@@ -11,13 +11,18 @@ import { StatusBar } from "expo-status-bar";
 import Constants from "expo-constants";
 import GlobalContext from "../context/Context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { pickImage, askForPermission } from "../utils";
+import { pickImage, askForPermission, uploadImage } from "../utils";
 import { useEffect } from "react";
+import { auth, db } from "../firebase";
+import { updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Profile() {
   const [displayName, setDisplayName] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [permissionStatus, setPermissionStatus] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -30,7 +35,35 @@ export default function Profile() {
     theme: { colors },
   } = useContext(GlobalContext);
 
-  function handlePress() {}
+  async function handlePress() {
+    console.log("hi");
+    const user = auth.currentUser;
+    let photoURL;
+    if (selectedImage) {
+      const { url } = await uploadImage(
+        selectedImage,
+        `images/${user.uid}`,
+        "profilePicture"
+      );
+      photoURL = url;
+    }
+    const userData = {
+      displayName,
+      email: user.email,
+    };
+    if (photoURL) {
+      userData.photoURL = photoURL;
+    }
+    try {
+      await Promise.all([
+        updateProfile(user, userData),
+        setDoc(doc(db, "users", user.uid), { ...userData, uid: user.uid }),
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+    navigation.navigate("home");
+  }
 
   async function handleProfilePicture() {
     try {
@@ -70,7 +103,7 @@ export default function Profile() {
           Please provide your name and profile photo
         </Text>
         <TouchableOpacity
-          onPress={handleProfilePicture}
+          onPress={() => handleProfilePicture()}
           style={{
             marginTop: 30,
             borderRadius: 120,
@@ -109,7 +142,7 @@ export default function Profile() {
           <Button
             title="Next"
             color={colors.secondary}
-            onPress={() => handlePress}
+            onPress={() => handlePress()}
             disabled={!displayName}
           />
         </View>

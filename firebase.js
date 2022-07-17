@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-import { initializeFirestore } from "firebase/firestore";
+import { getFirestore, initializeFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-ijSTmGKKxLvJmFNjdeZsPAaXXj3K6tQ",
@@ -20,9 +20,10 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
-export const db = initializeFirestore(app, {
-  experimentalForceLongPolling: true,
-});
+// export const db = initializeFirestore(app, {
+//   experimentalForceLongPolling: true,
+// });
+export const db = getFirestore(app);
 
 export function signIn(email, password) {
   return signInWithEmailAndPassword(auth, email, password);

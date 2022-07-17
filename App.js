@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import SignIn from "./screens/SignIn";
 import ContextWrapper from "./context/ContextWrapper";
 import Context from "./context/Context";
@@ -16,6 +17,7 @@ LogBox.ignoreLogs([
 ]);
 
 const Stack = createStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 function App() {
   const [currUser, setCurrUser] = useState(null);
