@@ -14,6 +14,8 @@ import Photo from "./screens/Photo";
 import Chats from "./screens/Chats";
 import { Ionicons } from "@expo/vector-icons";
 import Contacts from "./screens/Contacts";
+import Chat from "./screens/Chat";
+import ChatHeader from "./components/ChatHeader";
 
 LogBox.ignoreLogs([
   "Setting a timer",
@@ -77,6 +79,11 @@ function App() {
             name="contacts"
             options={{ title: "Select Contacts" }}
             component={Contacts}
+          />
+          <Stack.Screen
+            name="chat"
+            component={Chat}
+            options={{ headerTitle: (props) => <ChatHeader {...props} /> }}
           />
         </Stack.Navigator>
       )}
