@@ -1,5 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { initializeFirestore } from "firebase/firestore";
 
@@ -16,4 +20,13 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
-export const db = initializeFirestore(app, { experimentalForceLongPolling });
+export const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
+
+export function signIn(email, password) {
+  return signInWithEmailAndPassword(auth, email, password);
+}
+export function singUp(email, password) {
+  return createUserWithEmailAndPassword(auth, email, password);
+}
