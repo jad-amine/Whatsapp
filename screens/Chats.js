@@ -5,6 +5,7 @@ import { auth, db } from "../firebase";
 import { useContext } from "react";
 import GlobalContext from "../context/Context";
 import { useEffect } from "react";
+import ContactsFloatingIcon from "../components/ContactsFloatingIcon";
 
 export default function Chats() {
   const { currentUser } = auth;
@@ -32,6 +33,7 @@ export default function Chats() {
   return (
     <View style={{ flex: 1, padding: 5, paddingRight: 10 }}>
       <Text>Chats</Text>
+      <ContactsFloatingIcon />
     </View>
   );
 }

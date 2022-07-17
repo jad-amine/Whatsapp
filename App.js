@@ -13,6 +13,7 @@ import Profile from "./screens/Profile";
 import Photo from "./screens/Photo";
 import Chats from "./screens/Chats";
 import { Ionicons } from "@expo/vector-icons";
+import Contacts from "./screens/Contacts";
 
 LogBox.ignoreLogs([
   "Setting a timer",
@@ -71,6 +72,11 @@ function App() {
             name="home"
             component={Home}
             options={{ title: "Whatsapp" }}
+          />
+          <Stack.Screen
+            name="contacts"
+            options={{ title: "Select Contacts" }}
+            component={Contacts}
           />
         </Stack.Navigator>
       )}
